@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { Diary } from './types'
-import axios from 'axios'
+import { getAllDiaries } from './services/diaryService'
+import DiaryList from './components/DiaryList'
+import EntryForm from './components/EntryForm'
 const App=()=>{
- 
   //const [date, setDate] = useState('');
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
   useEffect(()=>{
-    axios.get<Diary[]>('http://localhost:3001/api/diaries').then(res=>setDiaries(res.data))
-
-  },[])
- /* const diaryCreate=(event:React.SyntheticEvent)=>{
-   
-  }*/
-
+     getAllDiaries().then(data=>setDiaries(data)
+     )
+},[])
   return  (
     <div>
+      <h2>Diary Entry</h2>
+      <EntryForm/>
       <ul>
-      { diaries.map(diary=>
-          <li key={diary.id}>{diary.weather}</li>
-        )
-      }
-      </ul>
+      { diaries.map(diary=><DiaryList key={diary.id} diary={diary}/>)
+      }</ul>
+      
     </div>
   )
 }
 
 export default App
+
+
