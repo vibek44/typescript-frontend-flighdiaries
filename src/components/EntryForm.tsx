@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { createDiaries } from "../services/diaryService";
+import toNewDiary from "../utils/parseEntry";
+import { EntriesProps } from "../types";
 
-const EntryForm=()=>{
+
+const EntryForm=({addDiaries}:EntriesProps)=>{
   const [date,setDate]=useState('');
   const [visibility,setVisibility]=useState('');
   const [weather, setWeather]=useState('');
@@ -9,8 +11,8 @@ const EntryForm=()=>{
 
   const submitDiary=(event:React.SyntheticEvent)=>{
     event.preventDefault()
-    createDiaries( {date,visibility,weather,comment});
-    
+    const newDiary=toNewDiary({date,visibility,weather,comment});
+    addDiaries(newDiary);
 
   }
  return(
