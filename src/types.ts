@@ -25,3 +25,7 @@ export interface Diary{
 export type NewDiary=Omit<Diary, 'id'>;
 
 //export type NonSensitiveDiaryEntry=Omit<Diary, 'comment'>;
+
+export interface EntriesProps{
+  addDiaries:(newDiary:NewDiary)=>void
+}
