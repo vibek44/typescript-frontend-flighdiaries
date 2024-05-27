@@ -3,11 +3,24 @@ import { Diary } from "../types";
 const baseUrl='http://localhost:3001/api/diaries'
 import { NewDiary } from "../types";
 
-export const getAllDiaries=()=>{
-   return axios.get<Diary[]>(baseUrl).then(res=>res.data)
+
+
+export const getAllDiaries=async()=>{
+  const response= await axios.get<Diary[]>(baseUrl) 
+  return  response.data
 }
 
-export const createDiaries=(diaryObject:NewDiary)=>{
-  return axios.post<Diary>(baseUrl,diaryObject).then(res=>res.data)
+export const createDiaries=async(diaryObject:NewDiary)=>{
+  try {
+    const res=await  axios.post<Diary>(baseUrl,diaryObject)
+    return res.data;
+     
+  } catch (error:unknown) {
+    if(error && axios.isAxiosError(error) && 'response' in error ){
+      return{message:error.response?.data}
+    }
+    
+  }
+  
 }
 
