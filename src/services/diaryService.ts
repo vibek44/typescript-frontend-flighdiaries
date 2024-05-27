@@ -16,7 +16,7 @@ export const createDiaries=async(diaryObject:NewDiary)=>{
     return res.data;
      
   } catch (error:unknown) {
-    if(error && axios.isAxiosError(error) && 'response' in error ){
+    if( axios.isAxiosError(error) ){
       return{message:error.response?.data}
     }
     
